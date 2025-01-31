@@ -73,7 +73,7 @@ class HomePageState extends ConsumerState<HomePage> {
                       automaticallyImplyLeading: false,
                       title: Text(
                         maxLines: 1,
-                        "Dhankawadi",
+                        "india",
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               color: Theme.of(context).brightness ==
                                       Brightness.dark
@@ -132,7 +132,7 @@ class HomePageState extends ConsumerState<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "EcoSaathi",
+                                "Vasundhara",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headlineLarge!
