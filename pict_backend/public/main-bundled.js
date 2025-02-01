@@ -16,7 +16,7 @@
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_Index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/Index */ \"./frontend-js/modules/Index.js\");\n\nif (document.querySelector('.index')) {\n  new _modules_Index__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\n}\n\n//# sourceURL=webpack://node/./frontend-js/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_Index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/Index.js */ \"./frontend-js/modules/Index.js\");\n\nif (document.querySelector('.index')) {\n  new _modules_Index_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\n}\n\n//# sourceURL=webpack://node/./frontend-js/main.js?");
 
 /***/ }),
 
