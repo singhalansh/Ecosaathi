@@ -21,7 +21,7 @@ Bin.prototype.cleanUp=function(){
     }
 }
 Bin.prototype.reverseGeocode = async function(lat,lon) {
-    const apiKey = 'AIzaSyBw7fIXJz5sA9IEcczMJ9FIzK91jvFIsno';
+    const apiKey = 'AIzaSyBRxwjISl8AD_gFUueM-AK64KhNfp_zeeQ';
     const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=${apiKey}`
   
     const response = await axios.get(apiUrl);

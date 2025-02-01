@@ -3,7 +3,7 @@
 (readme in progress)
 ## PICT International Techfiesta Hackathon Winning Project 🥇
 
-## ```EcoSaathi``` - A Waste Management Project
+## ```Vasundhara``` - A Waste Management Project
 
 # Bin Fill Level Detection using Computer Vision
 
