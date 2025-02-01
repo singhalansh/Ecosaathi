@@ -73,7 +73,7 @@ class HomePageState extends ConsumerState<HomePage> {
                       automaticallyImplyLeading: false,
                       title: Text(
                         maxLines: 1,
-                        "Dhankawadi",
+                        "INDIA",
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               color: Theme.of(context).brightness ==
                                       Brightness.dark
@@ -132,7 +132,7 @@ class HomePageState extends ConsumerState<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "EcoSaathi",
+                                "Vasundhara",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headlineLarge!
@@ -270,7 +270,7 @@ class HomePageState extends ConsumerState<HomePage> {
                                     : TColors.black),
                           ),
                           child: Image.asset(
-                            "assets/images/bot.png",
+                            "assets/images/footprints.png",
                             scale: 2,
                           ),
                         ),
@@ -278,7 +278,7 @@ class HomePageState extends ConsumerState<HomePage> {
                           height: 2,
                         ),
                         Text(
-                          "WasteBot",
+                          "CO₂ Footprints",
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     color: TColors.darkGrey,

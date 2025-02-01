@@ -54,13 +54,13 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 children: [
                   TextSpan(
-                      text: 'Eco',
+                      text: 'Vasun',
                       style: TextStyle(
                           color: Theme.of(context).brightness == Brightness.dark
                               ? Colors.white
                               : Colors.black)),
                   const TextSpan(
-                    text: 'Saathi',
+                    text: 'dhara',
                     style: TextStyle(color: TColors.primaryGreen),
                   )
                 ],

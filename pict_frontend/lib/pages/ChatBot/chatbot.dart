@@ -15,8 +15,19 @@ class ChatBot extends StatefulWidget {
 }
 
 class _ChatBotState extends State<ChatBot> {
-  final ChatBloc chatBloc = ChatBloc();
-  TextEditingController textEditingController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final electricityController = TextEditingController();
+  final transportationController = TextEditingController();
+  final shortFlightsController = TextEditingController();
+  final mediumFlightsController = TextEditingController();
+  final longFlightsController = TextEditingController();
+  String dietaryChoice = 'Vegan';
+
+  double yearlyElectricityEmissions = 0;
+  double yearlyTransportationEmissions = 0;
+  double totalAirTravelEmissions = 0;
+  double dietaryChoiceEmissions = 0;
+  double totalYearlyEmissions = 0;
 
   String? _id;
   String? _userImage;
@@ -34,8 +45,201 @@ class _ChatBotState extends State<ChatBot> {
     _id = "";
     _userImage = "";
     getSession();
-
     super.initState();
+  }
+
+  void calculateEmissions() {
+    const electricityFactor = 0.3978;
+    const transportationFactor = 9.087;
+    const kgCO2ePerYearFactor = 12;
+    const airTravelFactorShortHaul = 100.0;
+    const airTravelFactorMediumHaul = 200.0;
+    const airTravelFactorLongHaul = 300.0;
+    const dietaryFactors = {
+      'Vegan': 200.0,
+      'Vegetarian': 400.0,
+      'Pescatarian': 600.0,
+      'MeatEater': 800.0,
+    };
+
+    final electricity = double.tryParse(electricityController.text) ?? 0;
+    final transportation = double.tryParse(transportationController.text) ?? 0;
+    final shortFlights = double.tryParse(shortFlightsController.text) ?? 0;
+    final mediumFlights = double.tryParse(mediumFlightsController.text) ?? 0;
+    final longFlights = double.tryParse(longFlightsController.text) ?? 0;
+
+    setState(() {
+      yearlyElectricityEmissions = electricity * electricityFactor * kgCO2ePerYearFactor;
+      yearlyTransportationEmissions = transportation * transportationFactor * kgCO2ePerYearFactor;
+      totalAirTravelEmissions = (shortFlights * airTravelFactorShortHaul) +
+          (mediumFlights * airTravelFactorMediumHaul) +
+          (longFlights * airTravelFactorLongHaul);
+      dietaryChoiceEmissions = dietaryFactors[dietaryChoice] ?? 0;
+      totalYearlyEmissions = yearlyElectricityEmissions +
+          yearlyTransportationEmissions +
+          totalAirTravelEmissions +
+          dietaryChoiceEmissions;
+    });
+  }
+
+  Widget _buildForm() {
+    return Card(
+      color: Colors.white,
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              _buildTextField(electricityController, 'Electricity Usage (kWh/Month)'),
+              _buildTextField(transportationController, 'Transportation (Miles/Week)'),
+              _buildTextField(shortFlightsController, 'Short Flights (per Year)'),
+              _buildTextField(mediumFlightsController, 'Medium Flights (per Year)'),
+              _buildTextField(longFlightsController, 'Long Flights (per Year)'),
+              DropdownButtonFormField<String>(
+                value: dietaryChoice,
+                decoration: InputDecoration(
+                  labelText: 'Dietary Choice',
+                  border: OutlineInputBorder(),
+                ),
+                items: ['Vegan', 'Vegetarian', 'Pescatarian', 'MeatEater']
+                    .map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    dietaryChoice = newValue!;
+                  });
+                },
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    calculateEmissions();
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: TColors.primaryGreen,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: const Text(
+                  'Calculate Emissions',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, String label) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(),
+          filled: true,
+          fillColor: Colors.grey[200],
+        ),
+        keyboardType: TextInputType.number,
+        validator: (value) => value == null || value.isEmpty ? 'Enter $label' : null,
+      ),
+    );
+  }
+
+  Widget _buildCustomBarChart() {
+    final List<double> emissionsData = [
+      yearlyElectricityEmissions,
+      yearlyTransportationEmissions,
+      totalAirTravelEmissions,
+      dietaryChoiceEmissions,
+    ];
+
+    final List<String> labels = [
+      'Electricity',
+      'Transport',
+      'Flights',
+      'Diet',
+    ];
+
+    final List<Color> colors = [
+      TColors.primaryGreen,
+      TColors.accentGreen,
+      TColors.primaryYellow,
+      TColors.error,
+    ];
+
+    // Find the maximum emission value for scaling
+    final maxEmission = emissionsData.reduce((a, b) => a > b ? a : b);
+
+    return Container(
+      height: 350, // Increased height to accommodate labels
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: List.generate(emissionsData.length, (index) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                    width: 80, // Fixed width for each bar
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          height: (emissionsData[index] / maxEmission) * 150, // Scale bars dynamically
+                          decoration: BoxDecoration(
+                            color: colors[index],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          labels[index],
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          emissionsData[index].toStringAsFixed(2),
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Total Yearly Emissions: ${totalYearlyEmissions.toStringAsFixed(2)} kg CO2e',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              color: TColors.primaryGreen,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -44,7 +248,7 @@ class _ChatBotState extends State<ChatBot> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
-          "WasteBot",
+          "Carbon Footprint Calculator",
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         actions: [
@@ -52,177 +256,41 @@ class _ChatBotState extends State<ChatBot> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: _userImage!.isNotEmpty
                 ? CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 20,
-                    child: SizedBox(
-                      width: 180,
-                      height: 180,
-                      child: ClipOval(
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: _userImage == "null"
-                            ? Image.asset(
-                                "assets/images/villager.png",
-                                fit: BoxFit.cover,
-                              )
-                            : Image.network(
-                                "${AppConstants.IP}/userImages/$_userImage",
-                                fit: BoxFit.cover,
-                              ),
-                      ),
-                    ),
+              backgroundColor: Colors.white,
+              radius: 20,
+              child: SizedBox(
+                width: 180,
+                height: 180,
+                child: ClipOval(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  child: _userImage == "null"
+                      ? Image.asset(
+                    "assets/images/villager.png",
+                    fit: BoxFit.cover,
                   )
+                      : Image.network(
+                    "${AppConstants.IP}/userImages/$_userImage",
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            )
                 : const CircularProgressIndicator(),
           )
         ],
       ),
-      body: BlocConsumer<ChatBloc, ChatState>(
-        bloc: chatBloc,
-        listener: (context, state) {},
-        builder: (context, state) {
-          switch (state.runtimeType) {
-            case ChatSuccessState:
-              List<ChatMessageModel> messages =
-                  (state as ChatSuccessState).messages;
-              return Container(
-                padding: const EdgeInsets.only(top: 10),
-                width: double.maxFinite,
-                height: double.maxFinite,
-                decoration: const BoxDecoration(
-                    // image: DecorationImage(
-                    //     opacity: 0.5,
-                    //     image: AssetImage("assets/images/waste.png"),
-                    //     fit: BoxFit.cover),
-                    ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: messages.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: const EdgeInsets.only(
-                              top: 10,
-                              bottom: 12,
-                              left: 16,
-                              right: 16,
-                            ),
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: messages[index].role == "user"
-                                  ? Theme.of(context).brightness ==
-                                          Brightness.dark
-                                      ? TColors.white
-                                      : TColors.primaryYellow.withOpacity(.7)
-                                  : Theme.of(context).brightness ==
-                                          Brightness.dark
-                                      ? TColors.accentGreen
-                                      : TColors.primaryGreen.withOpacity(.6),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  messages[index].role == "user"
-                                      ? "User"
-                                      : "Waste Bot",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: messages[index].role == "user"
-                                        ? TColors.info
-                                        : TColors.error,
-                                  ),
-                                ),
-                                const Divider(
-                                  color: TColors.darkerGrey,
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                Text(
-                                  messages[index].parts.first.text,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                          height: 1.2, color: TColors.black),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    if (chatBloc.generating)
-                      Row(
-                        children: [
-                          SizedBox(
-                            height: 100,
-                            width: 100,
-                            child: Lottie.asset('assets/loader.json'),
-                          ),
-                        ],
-                      ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 30, horizontal: 16),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: textEditingController,
-                              style: const TextStyle(color: Colors.black),
-                              cursorColor: Theme.of(context).primaryColor,
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                hintText: "Ask Something From WasteBot",
-                                hintStyle:
-                                    TextStyle(color: Colors.grey.shade400),
-                                filled: true,
-                                // focusedBorder: OutlineInputBorder(
-                                //   borderRadius: BorderRadius.circular(100),
-                                //   //   borderSide: BorderSide(
-                                //   //       color: Theme.of(context).),
-                                // ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          InkWell(
-                            onTap: () {
-                              if (textEditingController.text.isNotEmpty) {
-                                String text = textEditingController.text;
-                                textEditingController.clear();
-                                chatBloc.add(
-                                  ChatGenerateNewTextMessageEvent(
-                                      inputMessage: text),
-                                );
-                              }
-                            },
-                            child: CircleAvatar(
-                              radius: 25,
-                              backgroundColor: Colors.white,
-                              child: CircleAvatar(
-                                radius: 28,
-                                backgroundColor: Theme.of(context).primaryColor,
-                                child: const Center(
-                                  child: Icon(Icons.send, color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              );
-
-            default:
-              return const SizedBox();
-          }
-        },
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildForm(),
+            if (totalYearlyEmissions > 0) ...[
+              const SizedBox(height: 20),
+              _buildCustomBarChart(),
+            ],
+          ],
+        ),
       ),
     );
   }

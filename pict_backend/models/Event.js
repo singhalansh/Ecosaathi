@@ -22,14 +22,14 @@ Event.prototype.cleanUp = function () {
     // isInCollabaration: Boolean(this.data.isInCollabaration),  take this to conditionally show the collab fields on fronted (FOR TAHER)
     collabOrganizationName: this.data.collabOrganizationName,
     collabOrgEmail: this.data.collabOrgEmail,
-    eventAttachment: this.data.eventAttachment,
+    eventAttachment: Array.isArray(this.data.eventAttachment)?this.data.eventAttachment:[this.data.eventAttachment],
     organizerName: this.data.organizerName,
     organizerEmail: this.data.organizerEmail,
     organizerNumber: this.data.organizerNumber,
     whatsAppLink: this.data.whatsAppLink,
     // areVolunteersNeeded: Boolean(this.data.areVolunteersNeeded), take this to conditionally show the volunteers fields on fronted (FOR TAHER)
-    eventAddress: "PICT Campus, Dhankawadi",
-    eventCity: "Pune",
+    eventAddress: "bennett university,greater noida",
+    eventCity: "Delhi",
     noOfVolunteersNeeded: Number(this.data.noOfVolunteersNeeded),
     participationCertificateTemplate:
       this.data.participationCertificateTemplate,
