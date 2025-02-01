@@ -44,9 +44,9 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyBrnkTG_CXhW7IRvWln2ToUtsq8s7DmORA',
     appId: '1:729605836483:web:ce11be04c8156a308e9c76',
     messagingSenderId: '729605836483',
-    projectId: 'Vasundhara-862d8',
-    authDomain: 'Vasundhara-862d8.firebaseapp.com',
-    storageBucket: 'Vasundhara-862d8.firebasestorage.app',
+    projectId: 'ecosaathi-862d8',
+    authDomain: 'ecosaathi-862d8.firebaseapp.com',
+    storageBucket: 'ecosaathi-862d8.firebasestorage.app',
     measurementId: 'G-3VF43NFBEK',
   );
 
@@ -54,16 +54,16 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyCz700e3UZRZi2DTo0aVsPC0t07RV_Bo2U',
     appId: '1:729605836483:android:204a4f78927c538f8e9c76',
     messagingSenderId: '729605836483',
-    projectId: 'Vasundhara-862d8',
-    storageBucket: 'Vasundhara-862d8.firebasestorage.app',
+    projectId: 'ecosaathi-862d8',
+    storageBucket: 'ecosaathi-862d8.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCdk9rR7RV9UkqjQXNveMrMM_gidoqUgL8',
     appId: '1:729605836483:ios:0f658a449e5ba51d8e9c76',
     messagingSenderId: '729605836483',
-    projectId: 'Vasundhara-862d8',
-    storageBucket: 'Vasundhara-862d8.firebasestorage.app',
+    projectId: 'ecosaathi-862d8',
+    storageBucket: 'ecosaathi-862d8.firebasestorage.app',
     iosBundleId: 'com.example.pictFrontend',
   );
 
@@ -71,8 +71,8 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyCdk9rR7RV9UkqjQXNveMrMM_gidoqUgL8',
     appId: '1:729605836483:ios:0f658a449e5ba51d8e9c76',
     messagingSenderId: '729605836483',
-    projectId: 'Vasundhara-862d8',
-    storageBucket: 'Vasundhara-862d8.firebasestorage.app',
+    projectId: 'ecosaathi-862d8',
+    storageBucket: 'ecosaathi-862d8.firebasestorage.app',
     iosBundleId: 'com.example.pictFrontend',
   );
 
@@ -80,9 +80,9 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyBrnkTG_CXhW7IRvWln2ToUtsq8s7DmORA',
     appId: '1:729605836483:web:9778a0749188befe8e9c76',
     messagingSenderId: '729605836483',
-    projectId: 'Vasundhara-862d8',
-    authDomain: 'Vasundhara-862d8.firebaseapp.com',
-    storageBucket: 'Vasundhara-862d8.firebasestorage.app',
+    projectId: 'ecosaathi-862d8',
+    authDomain: 'ecosaathi-862d8.firebaseapp.com',
+    storageBucket: 'ecosaathi-862d8.firebasestorage.app',
     measurementId: 'G-YK7NZT8X7K',
   );
 
