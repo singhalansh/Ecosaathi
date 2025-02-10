@@ -78,7 +78,7 @@ class _profileOptionsState extends ConsumerState<profileOptions> {
     }
 
     return Card(
-      margin: const EdgeInsets.fromLTRB(20, 470, 20, 0),
+      margin: const EdgeInsets.fromLTRB(20, 500, 20, 0),
       elevation: 1.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       child: SingleChildScrollView(
