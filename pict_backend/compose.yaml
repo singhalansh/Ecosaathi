@@ -6,7 +6,7 @@ services:
       context: .
     environment:
       NODE_ENV: production
-      MONGO_URI: "mongodb+srv://irahuljha007:wRBnz2sp6dkMq00L@cluster0.rt6im.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+      MONGO_URI: "mongodb+srv://singhalansh155:jaishreeram@vasundhara.6g7lg.mongodb.net/?retryWrites=true&w=majority&appName=Vasundhara"
     ports:
       - 4000:4000
     develop:
