@@ -26,7 +26,7 @@ def getRouteData(request):
      address=[]
      fill_levels=[]
      distance_matrix_data['API_key'] = '<YOUR_API_KEY>'
-     firstOBJ= requests.get("http://192.168.156.198:4000/depot/getAllDepots")
+     firstOBJ= requests.get("http://10.12.35.168:4000/depot/getAllDepots")
      print("helloo djn")
      print(firstOBJ.json())
      address.append(firstOBJ.json()[0]['depotLocation']['formattedAddress'].replace(", ","+"))
