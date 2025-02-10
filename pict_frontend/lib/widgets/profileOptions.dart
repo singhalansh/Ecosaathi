@@ -80,11 +80,11 @@ class _profileOptionsState extends ConsumerState<profileOptions> {
     return Card(
       margin: const EdgeInsets.fromLTRB(20, 500, 20, 0),
       elevation: 1.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 5),
+            const SizedBox(height: 2),
             GestureDetector(
               onTap: () {
                 // ? We need to push the user to edit profile page.
