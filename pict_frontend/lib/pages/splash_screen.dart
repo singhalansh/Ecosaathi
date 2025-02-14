@@ -55,7 +55,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 children: [
                   TextSpan(
                       text: 'Vasun',
-                      text: 'Vasun',
                       style: TextStyle(
                           color: Theme.of(context).brightness == Brightness.dark
                               ? Colors.white

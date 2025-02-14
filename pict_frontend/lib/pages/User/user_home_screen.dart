@@ -133,7 +133,6 @@ class HomePageState extends ConsumerState<HomePage> {
                             children: [
                               Text(
                                 "Vasundhara",
-                                "Vasundhara",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headlineLarge!
