@@ -6,7 +6,7 @@ import requests
 
 
 
-urlForWhatsappBot = 'http://10.12.57.249:4000/whatsapp/littered'
+urlForWhatsappBot = 'http://10.12.71.165:4000/whatsapp/littered'
 # accessTokenForWhatsappBot = ''
 # headersForWhatsappBot = {
 #   'Authorization': f'Bearer {accessTokenForWhatsappBot}',
